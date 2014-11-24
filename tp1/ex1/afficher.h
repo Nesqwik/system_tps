@@ -1,0 +1,1 @@
+void afficher(int[], int);
