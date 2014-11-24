@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS =-Wall -Werror 
 EXEC = exec
 SRC = $(wildcard *.c)
-OBJ = $(patsubst %.c, %.o, $(SRC))
+OBJ = $(patsubst %.c, %.o, $(SRC)) ligne_commande.o
 
 $(EXEC) : $(OBJ)
 	$(CC) -o $@ $^
