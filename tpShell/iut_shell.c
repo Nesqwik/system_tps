@@ -10,7 +10,7 @@
 
 void affiche_prompt()
 {
-	printf("iutshell$");
+	printf("iutshell$ ");
 	fflush(stdout);
 }
 
@@ -28,7 +28,8 @@ void execute_ligne_commande()
 		}
 		else
 		{
-			waitpid(pid, NULL, 0);
+			if (flag == 0)
+				waitpid(pid, NULL, 0);
 		}
 	}
 }
