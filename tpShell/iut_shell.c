@@ -10,8 +10,17 @@
 
 void affiche_prompt()
 {
-	printf("iutshell$ ");
+	char* user = NULL;
+	char* directory = NULL;
+	char hostname[20];
+	gethostname(hostname, 20);
+	user = getenv("USER");
+	directory = getcwd(NULL, 128);
+
+	printf("%s@%s%s$ ", user, hostname, directory);
 	fflush(stdout);
+
+	free(directory);
 }
 
 void execute_ligne_commande()
@@ -20,11 +29,16 @@ void execute_ligne_commande()
 
 	char ***argv = ligne_commande(&flag, &nb);
 
+	if (flag == -1)
+		return;
+
 	for(i = 0 ; i < nb ; i++)
 	{
 		pid = fork();
 		if(pid == 0) {
 			execvp(argv[i][0], argv[i]);
+			printf("iutshell: %s: commande introuvable\n", argv[i][0]);
+			exit(1);
 		}
 		else
 		{
@@ -32,5 +46,8 @@ void execute_ligne_commande()
 				waitpid(pid, NULL, 0);
 		}
 	}
+
+	//free(argv);
+
 }
 
