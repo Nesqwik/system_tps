@@ -46,8 +46,5 @@ void execute_ligne_commande()
 				waitpid(pid, NULL, 0);
 		}
 	}
-
-	//free(argv);
-
 }
 
