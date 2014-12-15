@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =-Wall -Werror -g
+CFLAGS =-Wall -Werror 
 EXEC = exec
 SRC = $(wildcard *.c)
 OBJ = $(patsubst %.c, %.o, $(SRC))

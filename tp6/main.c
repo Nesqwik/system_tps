@@ -22,7 +22,15 @@ int main(int argc, char** argv)
 		printf("album : %s\n", info.album);
 		printf("titre : %s\n", info.titre);
 		printf("genre : %s\n", info.genre);
-		printf("numero : %s\n\n", info.numero);
+		printf("numero : %s\n", info.numero);
+		char* buffer = malloc(255);
+		printf("%s\n", get_artist_folder(buffer, 255, "/home/toto/", &info));
+		printf("%s\n", get_genre_folder(buffer, 255, "/home/toto/", &info));
+		printf("%s\n\n", get_file_name(buffer, 255, &info, ".mp3"));
 	}
+	sort_file("/home/infoetu/guilberl/Documents/S3/systeme/tp6/toto/", argv[1]);
+
+	//printf("create_tree : %d\n\n", create_tree("/home/infoetu/guilberl/Documents/S3/systeme/tp6/toto/titi/"));
+
     return 0;
 }

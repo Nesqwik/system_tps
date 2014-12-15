@@ -22,21 +22,37 @@
 
 int tag_read_id3_header(int fd, id3v2_header_t *header)
 {
-	if(strcmp("ID3", read_string(fd, header->ID3, 3, 0)))
+	if(strcmp("ID3", read_string(fd, header->ID3, 3, 0)) != 0)
+	{
+		printf("titi1");
 		return -1;
+	}
+
 
 	if(!read_u16(fd, &(header->version)))
+	{
+		printf("titi2");
 		return -1;
+	}
 
 	// version valide
 	if(header->version > 0x0300)
+	{
+		printf("titi3");
 		return -1;
+	}
 
 	if(!read_u8(fd, &(header->flags)))
+	{
+		printf("titi4");
 		return -1;
+	}
 
 	if(!read_u32(fd, &(header->size)))
+	{
+		printf("titi5");
 		return -1;
+	}
 
 	header->size = convert_size(header->size);
 	return 0;
