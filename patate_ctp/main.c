@@ -5,21 +5,36 @@
 #include <unistd.h>
 #include <string.h>
 
-
+#include "patate.h"
 
 int main(void)
 {
-	int fd = open("/dev/urandom", O_RDONLY);
-	char buff[128];
-	read(fd, buff, 128);
+	int nbJoueur = 3;
+	int tubes[nbJoueur][2];
+	int nbDepart = obtenir_valeur_aleatoire(30); 
+	int i;
 	
-	int i, nb;
-	for(i = 0 ; i < strlen(buff) ; i++)
+	for(i = 0 ; i < nbJoueur ; i++)
 	{
-		nb += (int) buff[i];
+		pipe(tubes[i]);
 	}
 	
-	printf("nb : %d\n", (nb%10)+1);
-
+	
+	int lastPid = 0;
+	for(i = 0 ; i < nbJoueur ; i++)
+	{
+		if(lastPid == 0) {
+			lastPid = fork();
+		}
+		if(lastPid != 0) {
+			// TODO : suite
+			demarrer_recepteur_patate(tubes[i][0], tubes [i-1][1]);
+		}
+	}
+	
+	lancer_patate(fds[1], 10);
+	//recevoir_patate(fds[0]);
+	
+	demarrer_recepteur_patate(fds[0], fds[1]);
 	return 0;
 }

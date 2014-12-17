@@ -162,7 +162,7 @@ int sort_file(const char *root_folder, const char *source_file)
 	get_file_name(file_name, size, &info, get_file_extension(source_file));
 
 	get_artist_folder(folder_path, size, root_folder, &info);
-
+		
 	create_tree(folder_path);
 	snprintf(new_path, size, strcat(folder_path, file_name));
 	printf("%s \n %s\n\n", get_artist_folder(folder_path, size, root_folder, &info), file_name);
