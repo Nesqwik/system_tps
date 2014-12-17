@@ -20,7 +20,8 @@ int obtenir_valeur_aleatoire(int borne_superieure)
 void lancer_patate(int out, int valeur)
 {
 	write(out, (void*) &valeur, sizeof(int));
-	printf("%d lancé à %d\n", valeur, out);
+	if(valeur != -1)
+		printf("%d -> %d lancé à %d\n", getpid(), valeur, out);
 }
 
 int recevoir_patate(int in)
@@ -30,7 +31,8 @@ int recevoir_patate(int in)
 	if(read(in, &buf, sizeof(int)) == 0)
 		return -1;
 	
-	printf("%d recu de %d\n", (int) buf[0], in);
+	if((int) buf[0] != -1)
+		printf("%d -> %d recu de %d\n", getpid(), (int) buf[0], in);
 	
 	return (int) buf[0];
 }
@@ -43,7 +45,14 @@ void demarrer_recepteur_patate(int in, int out)
 		nb--;
 		if(nb == 0)
 		{
-			printf("explosion !");
+			printf("explosion !\n");
+			lancer_patate(out, -1);
+			exit(0);
+		}
+		else if (nb < 0)
+		{
+			printf("Gagné !!!");
+			close(out);
 			exit(0);
 		}
 		lancer_patate(out, nb);
